@@ -9,7 +9,7 @@ Basics
 
 
 Machine Translation
-1. Transformer
+1. [Transformer](./Transformer)
 
 2. seq2seq
 
@@ -44,7 +44,7 @@ Dialog System
 
 
 Optimisation
-1. ADMM
+1. [ADMM](./ADMM)
 
 
 
