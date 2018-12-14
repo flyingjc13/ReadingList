@@ -1,27 +1,54 @@
-Chenglei's Reading/Coding List:
+## Chenglei's Reading/Coding List:
 
 I read NLP papers and code some of the important ones.
 Most codes are adapted from existing implementations.
-I will keep updaing this repo.
+I keep updaing this repo for my own reference and track progress.
 
+Basics
+1. Numpy RNN
+
+
+Machine Translation
 1. Transformer
 
-2. RNTN 
+2. seq2seq
 
-3. Tree-LSTM
+Pre-training and transfer learning
+1. word2vec
 
-4. Word2Vec 
+2. Glove
 
-5. Glove 
+3. ELMo
 
-6. CopyNet 
+4. BERT
 
-7. comatch
+Summarization
+1. CopyNet
 
-8. SRNN
+2. Pointer-generator
 
-9. Pointer Network
+New Model Architecture 
+1. Tree LSTM
 
-10. ELMo
+2. SRNN
 
-11. BERT 
+Sentiment Analysis
+1. RNTN
+ 
+Machine Comprehension / QA
+1. pointer network
+
+2. comatch
+
+Dialog System
+
+
+Optimisation
+1. ADMM
+
+
+
+
+
+
+
