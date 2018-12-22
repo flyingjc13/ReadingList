@@ -13,7 +13,7 @@ Another advantage of transformer is its multi-head attntion. It computes linear 
 The disadvantage of not using RNN is that the model loses the ability to learn temporal(sequential) information. The transformer replaces it with position encoding where they use sine and cosine functions to learn the relative positions. BUT I personally suspect that this does not allow the model to learn long-term dependencies (compared to LSTM/GRU). If we are not so concerned about training speed and parallelization, perhaps replacing the positional encoding with LSTM/GRU could improve performance on tasks that need long-term dependencies. 
 
 
-It seems like the idea of combining LSTM and transformer has already been tested. Check this work(https://arxiv.org/pdf/1804.09849.pdf) by Chen et al.
+Update 1: It seems like the idea of combining LSTM and transformer has already been tested. Check this work(https://arxiv.org/pdf/1804.09849.pdf) by Chen et al.
 
 In their RNMT+ model, the positional encoding, feed-forward neural network and self-attention has been replaced with BiLSTM (uniLSTM in decoder). This is pretty much like a stacked seq2seq but with multi-head attention between each encoder and decoder layer. There is indeed some improvement over transformer. I suspect that the difference will be bigger on tasks with more distant dependencies.
 
@@ -22,5 +22,7 @@ They also experimented with different hybrids of encoder and decoder from transf
 They further enhance the performance by combining two encoders together. They experimented with cascaded encoder (transformer encoder on top of RNMT+ encoder) and multi-column encoder (outputs from two encoder are concatenated).
 
 So this is what you can do when you have a lot of GPUs :) 
+
+Update 2: In this [paper](https://arxiv.org/pdf/1808.08946.pdf), the authors use experiments to show that transformer and CNNs do not outperform RNNs on tasks requiring long-range dependencies (e.g. aubject-verb agreement). However, transformer is better than CNNs and RNNs in feature extraction (e.g. word sense disambiguation).
 
 
