@@ -5,12 +5,11 @@ import torch.nn.functional as F
 from utils import to_var 
 
 class PointerNetwork(nn.Module):
-	def __init__(self, input_size, emb_size, weight_size, answer_seq_len, hidden_size=512, is_GRU=True):
+	def __init__(self, input_size, emb_size, weight_size, hidden_size=512, is_GRU=True):
 		super(PointerNetwork, self).__init__()
 
 		self.hidden_size = hidden_size 
 		self.input_size = input_size 
-		self.answer_seq_len = answer_seq_len 
 		self.emb_size = emb_size 
 		self.weight_size = weight_size 
 		self.is_GRU = is_GRU
@@ -26,14 +25,18 @@ class PointerNetwork(nn.Module):
 		self.W1 = nn.Linear(hidden_size, weight_size, bias=False)
 		self.W2 = nn.Linear(hidden_size, weight_size, bias=False)
 		self.vt = nn.Linear(weight_size, 1, bias=False) 
+		self.WL = nn.Linear(hidden_size, 1, bias=False)
 
-	
+	# batch size has to be 1 because each sequence has a different decoder length
 	def forward(self, input):
 		batch_size = input.size(0)
 		input = self.emb(input) #(B, len, emb)
 
-		encoder_states, hc = self.enc(input) #encoder_states: (B, L, hid)
+		encoder_states, (h, c) = self.enc(input) #encoder_states: (B, L, hid)  h:(B, hid)
 		encoder_states = encoder_states.transpose(1, 0) #(L, B, hid)
+
+		pred_L = self.WL(h).squeeze()  #(B)
+		answer_seq_len = [2*a for a in pred_L]
 
 		decoder_input = to_var(torch.zeros(batch_size, self.emb_size))
 		hidden = to_var(torch.zeros([batch_size, self.hidden_size])) #(B, hid)
@@ -59,7 +62,7 @@ class PointerNetwork(nn.Module):
 
 		probs = torch.stack(probs, dim=1)  #(B, M, L)
 
-		return probs
+		return probs, pred_L
 
 
 
